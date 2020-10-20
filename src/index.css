@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/****** Header *******/
+
+ul.header {
+	text-align: left;
+	list-style-type: none;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--border-color);
+}
+
+ul.header li {
+	display: inline;
+	margin: 0px 10px;
+}
+
+ul.header li a {
+	text-decoration: none;
+	color: var(--a-link-color);
+}
+
+ul.header li a:hover {
+	color: var(--a-hover-color);
+	border-bottom: 1px solid var(--a-hover-underline-color);
+}
