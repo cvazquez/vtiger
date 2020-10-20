@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef, Suspense } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 
 async function apiRequest(method, queryString) {
 	try {
-		const	endPoint	= "http://dev.api.carlosvazquez.org",
+		const	endPoint	= "http://api.carlosvazquez.org",
 				path		= "/demo/vtiger/",
 				fullEndPointRequestURL = endPoint + path + method + (queryString && queryString.trim().length ? "/" + queryString : ""),
 				challengRequest = await fetch(fullEndPointRequestURL, {
@@ -25,7 +25,7 @@ export default function Index(props) {
 			[ loaded, setLoaded] = useState(false),
 			mounted = useRef(false),
 			method		= props.match.params.method && props.match.params.method.length ? props.match.params.method : undefined,
-			queryString	= props.location && props.location.search && props.location.search.length ? props.location.search.replace("?", "") : "id=19x1";
+			queryString	= props.location && props.location.search && props.location.search.length ? props.location.search.replace("?", "") : "";
 
 	useEffect(() => {
 		async function getData() {
@@ -38,6 +38,7 @@ export default function Index(props) {
 		}
 
 		if(!mounted.current) {
+			setLoaded(false);
 			getData();
 		}
 
@@ -45,12 +46,14 @@ export default function Index(props) {
 	},[method, queryString]);
 
 	if(!loaded) {
-		return <div>Loading....</div>
+		return <div>Loading {method.toUpperCase()}....</div>
 	} else {
 			return	<div>
+				<h2>{method.toUpperCase()}</h2>
+
 				<ul>
 				{
-					Object.keys(data).map((key, index) => <li key={index}>{key} : {data[key]}</li>)
+					Object.keys(data).map((key, index) => <li key={index}>{key} : {typeof(data[key]) === "string" ? data[key] : JSON.stringify(data[key])}</li>)
 				}
 				</ul>
 			</div>

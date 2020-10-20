@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Contacts from './components/contacts';
 import Methods from './components/methods'
 
 const getNavLinks = () => [
@@ -10,8 +9,18 @@ const getNavLinks = () => [
 		text	: "Home"
 	},
 	{
-		path	: "/contacts",
-		text	: "Contacts"
+		path	: "/me",
+		text	: "Me"
+	},
+	{
+		path	: "/retrieve",
+		text	: "Retrieve",
+		params	: "id=19x1"
+	},
+	{
+		path	: "/listtypes",
+		text	: "List Types",
+		params	: "fieldTypeList=null"
 	}
 ],
 getNavHeader = () =>
@@ -19,7 +28,7 @@ getNavHeader = () =>
 	{	// Loop through nav links and display at top of page
 		getNavLinks().map(link =>
 			<li key={link.text}>
-				<Link	to			= {link.path}
+				<Link	to			= {link.path + (link.params && link.params.trim().length ? "?" + link.params : "")}
 						data-testid	= {link.text}>
 					{link.text}
 				</Link>
@@ -37,9 +46,6 @@ export default function App() {
 					<Switch>
 						{/* Exact paths keep each sub folder from overriding parent path */}
 						<Route exact	path		= "/" />
-						<Route exact	path		= "/contacts">
-							<Contacts />
-						</Route>
 						<Route	path		= "/:method"
 								component	= {Methods} />
 					</Switch>
